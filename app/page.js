@@ -64,7 +64,7 @@ export default function Home() {
                   className="px-3 py-2 sm:px-4 text-sm bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
                 >
                   <span className="hidden sm:inline">
-                    Check Someone Else's Data
+                    Check Someone Else&apos;s Data
                   </span>
                   <span className="sm:hidden">New Data</span>
                 </button>
