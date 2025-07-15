@@ -57,15 +57,28 @@ export default function Home() {
                 Hinge Data Analyzer
               </h1>
             </div>
-            <a
-              href="https://twitter.com/dave_xt"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <Twitter className="h-4 w-4 sm:h-5 sm:w-5" />
-              <span className="hidden sm:inline">@dave_xt</span>
-            </a>
+            <div className="flex items-center space-x-4">
+              {processedData && (
+                <button
+                  onClick={() => handleDataLoaded(null)}
+                  className="px-3 py-2 sm:px-4 text-sm bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+                >
+                  <span className="hidden sm:inline">
+                    Check Someone Else's Data
+                  </span>
+                  <span className="sm:hidden">New Data</span>
+                </button>
+              )}
+              <a
+                href="https://twitter.com/dave_xt"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <Twitter className="h-4 w-4 sm:h-5 sm:w-5" />
+                <span className="hidden sm:inline">@dave_xt</span>
+              </a>
+            </div>
           </div>
           <p className="text-muted-foreground mt-2 text-sm sm:text-base">
             Analyze your Hinge dating app data with beautiful charts and
