@@ -84,7 +84,7 @@ export default function Home() {
               </h2>
               <ol className="text-left text-muted-foreground space-y-2">
                 <li>1. Go to Hinge app settings</li>
-                <li>2. Select "Download My Data"</li>
+                <li>2. Select &quot;Download My Data&quot;</li>
                 <li>3. Wait for the email with your data</li>
                 <li>4. Upload the matches.json file here</li>
               </ol>
