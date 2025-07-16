@@ -1,8 +1,5 @@
 "use client";
 
-import FileUpload from "@/components/FileUpload";
-import InsightsSection from "@/components/InsightsSection";
-import StatsCards from "@/components/StatsCards";
 import {
   LikesByHourChart,
   LikesByMonthChart,
@@ -18,6 +15,10 @@ import {
   MessagesByHourChart,
   MessagesBySeasonChart,
 } from "@/components/charts/MessagesChart";
+import FileUpload from "@/components/FileUpload";
+import InsightsSection from "@/components/InsightsSection";
+import PDFExport from "@/components/PDFExport";
+import StatsCards from "@/components/StatsCards";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { processHingeData } from "@/lib/dataProcessor";
@@ -25,23 +26,35 @@ import {
   BarChart3,
   Heart,
   MessageCircle,
+  Share2,
   ThumbsUp,
   TrendingUp,
   Twitter,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Home() {
   const [data, setData] = useState(null);
   const [processedData, setProcessedData] = useState(null);
+  const router = useRouter();
 
   const handleDataLoaded = (rawData) => {
     setData(rawData);
     if (rawData) {
       const processed = processHingeData(rawData);
       setProcessedData(processed);
+      // Store processed data for sharing
+      sessionStorage.setItem("hingeProcessedData", JSON.stringify(processed));
     } else {
       setProcessedData(null);
+      sessionStorage.removeItem("hingeProcessedData");
+    }
+  };
+
+  const handleShare = () => {
+    if (processedData) {
+      router.push("/share");
     }
   };
 
@@ -59,15 +72,25 @@ export default function Home() {
             </div>
             <div className="flex items-center space-x-4">
               {processedData && (
-                <button
-                  onClick={() => handleDataLoaded(null)}
-                  className="px-3 py-2 sm:px-4 text-sm bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
-                >
-                  <span className="hidden sm:inline">
-                    Check Someone Else&apos;s Data
-                  </span>
-                  <span className="sm:hidden">New Data</span>
-                </button>
+                <>
+                  <button
+                    onClick={handleShare}
+                    className="flex items-center space-x-2 px-3 py-2 sm:px-4 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    <Share2 className="h-4 w-4" />
+                    <span className="hidden sm:inline">Create Stories</span>
+                    <span className="sm:hidden">Share</span>
+                  </button>
+                  <button
+                    onClick={() => handleDataLoaded(null)}
+                    className="px-3 py-2 sm:px-4 text-sm bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+                  >
+                    <span className="hidden sm:inline">
+                      Check Someone Else&apos;s Data
+                    </span>
+                    <span className="sm:hidden">New Data</span>
+                  </button>
+                </>
               )}
               <a
                 href="https://twitter.com/dave_xt"
@@ -257,6 +280,18 @@ export default function Home() {
               </TabsContent>
             </Tabs>
 
+            {/* PDF Export Section */}
+            <div className="border-t pt-8">
+              <div className="text-center mb-6">
+                <h2 className="text-2xl font-bold mb-2">Export Your Data</h2>
+                <p className="text-muted-foreground">
+                  Download a comprehensive PDF report with all your charts and
+                  insights
+                </p>
+              </div>
+              <PDFExport data={processedData} />
+            </div>
+
             {/* Reset Button */}
             <div className="text-center pt-8">
               <button
@@ -274,7 +309,7 @@ export default function Home() {
       <footer className="border-t mt-16">
         <div className="container mx-auto px-4 py-6 text-center text-muted-foreground">
           <p>
-            Made with ❤️ for data lovers. Connect with me on{" "}
+            Made with ❤️ in California. Connect with me on{" "}
             <a
               href="https://twitter.com/dave_xt"
               target="_blank"
