@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
         className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}
       >
         {children}
+        <GoogleAnalytics gaId="G-EXLWC5GBW4" />
       </body>
     </html>
   );
