@@ -29,7 +29,7 @@ import {
   Share2,
   ThumbsUp,
   TrendingUp,
-  Twitter,
+  createLucideIcon,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -57,6 +57,18 @@ export default function Home() {
       router.push("/share");
     }
   };
+
+  const XIcon = createLucideIcon("X", [
+    [
+      "path",
+      {
+        key: "x-path",
+        d: "M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z",
+        stroke: "none",
+        fill: "currentColor",
+      },
+    ],
+  ]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -93,12 +105,12 @@ export default function Home() {
                 </>
               )}
               <a
-                href="https://twitter.com/dave_xt"
+                href="https://x.com/dave_xt"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors"
               >
-                <Twitter className="h-4 w-4 sm:h-5 sm:w-5" />
+                <XIcon className="h-4 w-4" />
                 <span className="hidden sm:inline">@dave_xt</span>
               </a>
             </div>
@@ -311,7 +323,7 @@ export default function Home() {
           <p>
             Made with ❤️ in California. Connect with me on{" "}
             <a
-              href="https://twitter.com/dave_xt"
+              href="https://x.com/dave_xt"
               target="_blank"
               rel="noopener noreferrer"
               className="text-foreground hover:underline"

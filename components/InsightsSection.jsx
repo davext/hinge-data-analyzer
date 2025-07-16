@@ -159,33 +159,33 @@ export default function InsightsSection({ data }) {
       <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
         <CardContent className="pt-6">
           <div className="text-center">
-            <h3 className="text-xl font-semibold mb-4">Your Hinge Summary</h3>
+            <h3 className="text-xl font-semibold mb-4 text-gray-800">
+              Your Hinge Summary
+            </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
               <div>
                 <div className="text-2xl font-bold text-blue-600">
                   {totalLikes.toLocaleString()}
                 </div>
-                <div className="text-muted-foreground">Total Likes Sent</div>
+                <div className="text-gray-600">Total Likes Sent</div>
               </div>
               <div>
                 <div className="text-2xl font-bold text-green-600">
                   {likesToMatchConversion.rate.toFixed(1)}%
                 </div>
-                <div className="text-muted-foreground">Success Rate</div>
+                <div className="text-gray-600">Success Rate</div>
               </div>
               <div>
                 <div className="text-2xl font-bold text-purple-600">
                   {totalConversations.toLocaleString()}
                 </div>
-                <div className="text-muted-foreground">
-                  Conversations Started
-                </div>
+                <div className="text-gray-600">Conversations Started</div>
               </div>
               <div>
                 <div className="text-2xl font-bold text-orange-600">
                   {peakActivityHour.formatted}
                 </div>
-                <div className="text-muted-foreground">Peak Activity Time</div>
+                <div className="text-gray-600">Peak Activity Time</div>
               </div>
             </div>
           </div>
