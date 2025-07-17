@@ -12,23 +12,25 @@ export default function SharePage() {
   const router = useRouter();
 
   useEffect(() => {
-    // Get processed data from sessionStorage or localStorage
-    const storedData =
-      sessionStorage.getItem("hingeProcessedData") ||
-      localStorage.getItem("hingeProcessedData");
+    // Get processed data from sessionStorage or localStorage (client-side only)
+    if (typeof window !== "undefined") {
+      const storedData =
+        sessionStorage.getItem("hingeProcessedData") ||
+        localStorage.getItem("hingeProcessedData");
 
-    if (storedData) {
-      try {
-        const processedData = JSON.parse(storedData);
-        const generatedStories = generateStories(processedData);
-        setStories(generatedStories);
-      } catch (error) {
-        console.error("Error parsing stored data:", error);
+      if (storedData) {
+        try {
+          const processedData = JSON.parse(storedData);
+          const generatedStories = generateStories(processedData);
+          setStories(generatedStories);
+        } catch (error) {
+          console.error("Error parsing stored data:", error);
+          router.push("/");
+        }
+      } else {
+        // No data found, redirect to home
         router.push("/");
       }
-    } else {
-      // No data found, redirect to home
-      router.push("/");
     }
 
     setLoading(false);

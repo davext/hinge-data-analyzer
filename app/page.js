@@ -44,11 +44,15 @@ export default function Home() {
     if (rawData) {
       const processed = processHingeData(rawData);
       setProcessedData(processed);
-      // Store processed data for sharing
-      sessionStorage.setItem("hingeProcessedData", JSON.stringify(processed));
+      // Store processed data for sharing (client-side only)
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("hingeProcessedData", JSON.stringify(processed));
+      }
     } else {
       setProcessedData(null);
-      sessionStorage.removeItem("hingeProcessedData");
+      if (typeof window !== "undefined") {
+        sessionStorage.removeItem("hingeProcessedData");
+      }
     }
   };
 
@@ -329,6 +333,15 @@ export default function Home() {
               className="text-foreground hover:underline"
             >
               @dave_xt
+            </a>{" "}
+            or visit{" "}
+            <a
+              href="https://xt.gy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-foreground hover:underline"
+            >
+              xt.gy
             </a>
           </p>
         </div>

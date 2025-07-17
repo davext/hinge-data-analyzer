@@ -87,6 +87,8 @@ export default function StoryCarousel({ stories }) {
   };
 
   const handleShare = async () => {
+    if (typeof window === "undefined") return;
+
     if (navigator.share) {
       try {
         await navigator.share({
@@ -104,6 +106,8 @@ export default function StoryCarousel({ stories }) {
   };
 
   const fallbackShare = () => {
+    if (typeof window === "undefined") return;
+
     const url = window.location.href;
     navigator.clipboard.writeText(url).then(() => {
       alert("Link copied to clipboard!");
@@ -111,6 +115,8 @@ export default function StoryCarousel({ stories }) {
   };
 
   const downloadStory = async () => {
+    if (typeof window === "undefined") return;
+
     const storyElement = carouselRef.current?.querySelector(".story-container");
     if (!storyElement) return;
 
@@ -137,6 +143,8 @@ export default function StoryCarousel({ stories }) {
   };
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     const handleKeyPress = (e) => {
       if (e.key === "ArrowLeft") prevStory();
       if (e.key === "ArrowRight") nextStory();

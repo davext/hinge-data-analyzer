@@ -344,6 +344,11 @@ function formatHour(hourString) {
 
 async function createChart(data, chartType, width, height) {
   return new Promise((resolve) => {
+    if (typeof document === "undefined") {
+      resolve("");
+      return;
+    }
+
     const canvas = document.createElement("canvas");
     canvas.width = width;
     canvas.height = height;
