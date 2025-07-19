@@ -149,43 +149,45 @@ export default function Home() {
 
             {/* Charts */}
             <Tabs defaultValue="matches" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5">
-                <TabsTrigger
-                  value="matches"
-                  className="flex items-center space-x-1 lg:space-x-2"
-                >
-                  <Heart className="h-4 w-4" />
-                  <span className="hidden sm:inline">Matches</span>
-                </TabsTrigger>
-                <TabsTrigger
-                  value="likes"
-                  className="flex items-center space-x-1 lg:space-x-2"
-                >
-                  <ThumbsUp className="h-4 w-4" />
-                  <span className="hidden sm:inline">Likes</span>
-                </TabsTrigger>
-                <TabsTrigger
-                  value="messages"
-                  className="flex items-center space-x-1 lg:space-x-2"
-                >
-                  <MessageCircle className="h-4 w-4" />
-                  <span className="hidden sm:inline">Messages</span>
-                </TabsTrigger>
-                <TabsTrigger
-                  value="patterns"
-                  className="flex items-center space-x-1 lg:space-x-2"
-                >
-                  <BarChart3 className="h-4 w-4" />
-                  <span className="hidden sm:inline">Patterns</span>
-                </TabsTrigger>
-                <TabsTrigger
-                  value="insights"
-                  className="flex items-center space-x-1 lg:space-x-2"
-                >
-                  <TrendingUp className="h-4 w-4" />
-                  <span className="hidden sm:inline">Insights</span>
-                </TabsTrigger>
-              </TabsList>
+              <div className="w-full overflow-x-auto">
+                <TabsList className="flex w-full min-w-fit gap-1">
+                  <TabsTrigger
+                    value="matches"
+                    className="flex items-center space-x-1 lg:space-x-2 flex-shrink-0"
+                  >
+                    <Heart className="h-4 w-4" />
+                    <span className="hidden sm:inline">Matches</span>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="likes"
+                    className="flex items-center space-x-1 lg:space-x-2 flex-shrink-0"
+                  >
+                    <ThumbsUp className="h-4 w-4" />
+                    <span className="hidden sm:inline">Likes</span>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="messages"
+                    className="flex items-center space-x-1 lg:space-x-2 flex-shrink-0"
+                  >
+                    <MessageCircle className="h-4 w-4" />
+                    <span className="hidden sm:inline">Messages</span>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="patterns"
+                    className="flex items-center space-x-1 lg:space-x-2 flex-shrink-0"
+                  >
+                    <BarChart3 className="h-4 w-4" />
+                    <span className="hidden sm:inline">Patterns</span>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="insights"
+                    className="flex items-center space-x-1 lg:space-x-2 flex-shrink-0"
+                  >
+                    <TrendingUp className="h-4 w-4" />
+                    <span className="hidden sm:inline">Insights</span>
+                  </TabsTrigger>
+                </TabsList>
+              </div>
 
               <TabsContent value="matches" className="space-y-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
