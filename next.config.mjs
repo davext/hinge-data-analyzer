@@ -1,8 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Export as static site for Cloudflare Pages
-  output: "export",
-  // Optimize images for static export
+  // No static export - OpenNext handles SSR on Cloudflare
+  // Images can be optimized with Cloudflare
   images: {
     unoptimized: true,
   },

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://raw.githubusercontent.com/cloudflare/workers-sdk/main/schemas/wrangler.jsonc",
+  "name": "hinge-data-analyzer",
+  "compatibility_date": "2024-12-01",
+  "main": ".open-next/worker.js",
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  }
+  // Uncomment and configure the following if you need custom settings
+  // "account_id": "your-account-id",
+  // "kv_namespaces": [],
+  // "d1_databases": [],
+  // "r2_buckets": [],
+  // "vars": {}
+}
