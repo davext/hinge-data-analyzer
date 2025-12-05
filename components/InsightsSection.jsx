@@ -9,6 +9,7 @@ export default function InsightsSection({ data }) {
     totalMatches,
     totalConversations,
     totalMessages,
+    totalPeopleLiked,
     analytics: {
       likesToMatchConversion,
       likesWithComments,
@@ -18,10 +19,13 @@ export default function InsightsSection({ data }) {
   } = data;
 
   // Calculate interaction statistics
-  const totalInteractions = totalLikes; // Assuming we're only tracking likes sent
+  const totalInteractions = totalLikes; // Total like actions
   const likesPercentage = totalLikes > 0 ? 100 : 0;
   const conversationRate =
     totalMatches > 0 ? (totalConversations / totalMatches) * 100 : 0;
+
+  // Show if there were any re-likes (liked same person multiple times)
+  const hasReLikes = totalLikes > totalPeopleLiked;
 
   const insights = [
     {
@@ -31,29 +35,31 @@ export default function InsightsSection({ data }) {
       stats: [
         {
           label: "Conversion Rate",
-          value: `${likesToMatchConversion.rate.toFixed(2)}%`,
-          description: "of your likes turned into matches",
+          value: `${likesToMatchConversion.rate.toFixed(1)}%`,
+          description: `${likesToMatchConversion.matched.toLocaleString()} of ${totalPeopleLiked.toLocaleString()} people matched back`,
         },
         {
-          label: "Total Likes Sent",
-          value: totalLikes.toLocaleString(),
-          description: `${likesPercentage.toFixed(
-            2
-          )}% of your total interactions`,
+          label: "People Liked",
+          value: totalPeopleLiked.toLocaleString(),
+          description: hasReLikes
+            ? `${totalLikes.toLocaleString()} total likes (${(
+                totalLikes - totalPeopleLiked
+              ).toLocaleString()} re-likes)`
+            : `${totalLikes.toLocaleString()} total like actions`,
         },
         {
-          label: "Reciprocated",
-          value: `${likesToMatchConversion.matched.toLocaleString()} matches`,
+          label: "Matched",
+          value: `${likesToMatchConversion.matched.toLocaleString()}`,
           description: `${likesToMatchConversion.rate.toFixed(
-            2
-          )}% were reciprocated`,
+            1
+          )}% of people you liked matched with you`,
         },
         {
-          label: "Not Reciprocated",
-          value: `${likesToMatchConversion.unmatched.toLocaleString()} likes`,
+          label: "Didn't Match",
+          value: `${likesToMatchConversion.unmatched.toLocaleString()}`,
           description: `${(100 - likesToMatchConversion.rate).toFixed(
-            2
-          )}% didn't result in a match`,
+            1
+          )}% didn't match back`,
         },
       ],
     },
@@ -69,15 +75,13 @@ export default function InsightsSection({ data }) {
         },
         {
           label: "Likes with Comments",
-          value: `${likesWithComments.percentage.toFixed(2)}%`,
-          description: `${likesWithComments.withComments.toLocaleString()} of ${totalLikes.toLocaleString()} likes sent with comments`,
+          value: `${likesWithComments.percentage.toFixed(1)}%`,
+          description: `${likesWithComments.withComments.toLocaleString()} of ${totalLikes.toLocaleString()} likes included a comment`,
         },
         {
           label: "Conversation Rate",
-          value: `${conversationRate.toFixed(2)}%`,
-          description: `You chatted with ${conversationRate.toFixed(
-            2
-          )}% of your matches`,
+          value: `${conversationRate.toFixed(1)}%`,
+          description: `${totalConversations.toLocaleString()} of ${totalMatches.toLocaleString()} matches led to conversations`,
         },
         {
           label: "Average Messages per Match",
@@ -165,9 +169,9 @@ export default function InsightsSection({ data }) {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
               <div>
                 <div className="text-2xl font-bold text-blue-600">
-                  {totalLikes.toLocaleString()}
+                  {totalPeopleLiked.toLocaleString()}
                 </div>
-                <div className="text-gray-600">Total Likes Sent</div>
+                <div className="text-gray-600">People Liked</div>
               </div>
               <div>
                 <div className="text-2xl font-bold text-green-600">

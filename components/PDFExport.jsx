@@ -47,10 +47,13 @@ export default function PDFExport({ data }) {
 
       pdf.setFontSize(12);
       const stats = [
+        `People Liked: ${data.totalPeopleLiked}`,
         `Total Matches: ${data.totalMatches}`,
-        `Total Messages: ${data.totalMessages}`,
-        `Total Likes Sent: ${data.totalLikes}`,
         `Total Conversations: ${data.totalConversations}`,
+        `Total Messages: ${data.totalMessages}`,
+        `Conversion Rate: ${data.analytics.likesToMatchConversion.rate.toFixed(
+          1
+        )}%`,
         `Average Messages per Match: ${data.analytics.averageMessages.toFixed(
           1
         )}`,

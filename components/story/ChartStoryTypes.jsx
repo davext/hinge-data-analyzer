@@ -82,23 +82,22 @@ export function SeasonalActivityStory({ story }) {
 
   return (
     <StoryTemplate story={story}>
-      <div className="text-center space-y-6">
-        <div className="space-y-2">
-          <Calendar className="w-12 h-12 mx-auto opacity-90" />
-          <h2 className="text-2xl font-bold">Seasonal Breakdown</h2>
-          <p className="text-sm opacity-80">Your activity by season</p>
+      <div className="text-center space-y-4">
+        <div className="space-y-1">
+          <Calendar className="w-10 h-10 mx-auto opacity-90" />
+          <p className="text-xs opacity-80">Your activity by season</p>
         </div>
 
         <StoryPieChart data={story.data.seasonalData} colors={seasonColors} />
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-2 px-2">
           {story.data.seasonalData.map((season, index) => (
             <div
               key={season.season}
-              className="bg-white/10 backdrop-blur-sm rounded-lg p-3"
+              className="bg-white/10 backdrop-blur-sm rounded-lg p-2"
             >
-              <div className="text-sm font-semibold">{season.season}</div>
-              <div className="text-lg">{season.count}</div>
+              <div className="text-xs font-semibold">{season.season}</div>
+              <div className="text-base">{season.count}</div>
             </div>
           ))}
         </div>
@@ -205,14 +204,14 @@ export function MatchProgressStory({ story }) {
 
         <div className="space-y-4">
           <StoryProgressBar
-            value={story.data.totalLikes}
-            max={story.data.totalLikes}
-            label="Likes Sent"
+            value={story.data.totalPeopleLiked}
+            max={story.data.totalPeopleLiked}
+            label="People Liked"
             color={style.accent}
           />
           <StoryProgressBar
             value={story.data.totalMatches}
-            max={story.data.totalLikes}
+            max={story.data.totalPeopleLiked}
             label="Matches"
             color={style.accent}
           />

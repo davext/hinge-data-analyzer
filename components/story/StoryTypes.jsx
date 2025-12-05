@@ -5,6 +5,7 @@ import {
   Clock,
   Heart,
   MessageCircle,
+  MessageSquare,
   Target,
   ThumbsUp,
 } from "lucide-react";
@@ -216,6 +217,85 @@ export function ConversionStory({ story }) {
 
         <div className="text-lg opacity-90">
           {story.data.dates} dates from {story.data.matches} matches
+        </div>
+      </div>
+    </StoryTemplate>
+  );
+}
+
+export function CommentStrategyStory({ story }) {
+  return (
+    <StoryTemplate story={story}>
+      <div className="text-center space-y-8">
+        <div className="space-y-6">
+          <MessageSquare className="w-16 h-16 mx-auto opacity-90" />
+          <div className="space-y-4">
+            <div>
+              <div className="text-6xl font-bold">{story.data.percentage}%</div>
+              <div className="text-xl opacity-80">Likes with Comments</div>
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4">
+              <div className="text-xl font-semibold">{story.data.style}</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="text-lg opacity-90">
+          <div>{story.data.withComments} comments sent</div>
+          <div className="text-sm opacity-75 mt-1">
+            vs {story.data.withoutComments} regular likes
+          </div>
+        </div>
+      </div>
+    </StoryTemplate>
+  );
+}
+
+export function LongestChatStory({ story }) {
+  return (
+    <StoryTemplate story={story}>
+      <div className="text-center space-y-8">
+        <div className="space-y-6">
+          <div className="text-8xl">🏆</div>
+          <div className="space-y-4">
+            <div>
+              <div className="text-6xl font-bold">{story.data.count}</div>
+              <div className="text-xl opacity-80">Messages in One Chat</div>
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4">
+              <div className="text-xl font-semibold">Your Longest Convo</div>
+              <div className="text-sm opacity-75 mt-1">
+                Happened on {story.data.date}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </StoryTemplate>
+  );
+}
+
+export function DateNightStory({ story }) {
+  return (
+    <StoryTemplate story={story}>
+      <div className="text-center space-y-8">
+        <div className="space-y-6">
+          <Calendar className="w-16 h-16 mx-auto opacity-90" />
+          <div className="space-y-4">
+            <div>
+              <div className="text-5xl font-bold">{story.data.day}</div>
+              <div className="text-xl opacity-80">Is Your Date Night</div>
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4">
+              <div className="text-xl font-semibold">Most Active Day</div>
+              <div className="text-sm opacity-75 mt-1">
+                {story.data.count} dates on {story.data.day}s
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </StoryTemplate>

@@ -1,14 +1,14 @@
-"use client";
-
 import {
   Bar,
   BarChart,
   Cell,
+  Legend,
   Line,
   LineChart,
   Pie,
   PieChart,
   ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
@@ -80,20 +80,59 @@ export function StoryPieChart({
   data,
   colors = ["#ff6b6b", "#4ecdc4", "#45b7d1", "#96ceb4", "#ffeaa7"],
 }) {
+  const RADIAN = Math.PI / 180;
+  const renderCustomizedLabel = ({
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    percent,
+    index,
+    payload,
+  }) => {
+    // Increase radius to place label outside
+    const radius = outerRadius + 20;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    return (
+      <text
+        x={x}
+        y={y}
+        fill="white"
+        textAnchor={x > cx ? "start" : "end"}
+        dominantBaseline="central"
+        style={{
+          fontSize: "9px",
+          fontWeight: "bold",
+          textShadow: "1px 1px 2px rgba(0,0,0,0.8)",
+        }}
+      >
+        {payload.season}
+        <tspan x={x} dy="1.1em" textAnchor={x > cx ? "start" : "end"}>
+          {`${(percent * 100).toFixed(0)}%`}
+        </tspan>
+      </text>
+    );
+  };
+
   return (
-    <div className="w-full h-48 flex items-center justify-center">
+    <div className="w-full h-52 flex items-center justify-center">
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie
             data={data}
             cx="50%"
             cy="50%"
-            innerRadius={40}
-            outerRadius={80}
-            paddingAngle={3}
+            innerRadius={35}
+            outerRadius={60} // Further reduced radius
+            paddingAngle={5}
             dataKey="count"
             stroke="rgba(255,255,255,0.3)"
             strokeWidth={2}
+            label={renderCustomizedLabel}
+            labelLine={true} // Add connector line
           >
             {data.map((entry, index) => (
               <Cell

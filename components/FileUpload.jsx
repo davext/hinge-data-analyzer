@@ -147,7 +147,7 @@ export default function FileUpload({ onDataLoaded }) {
               <p className="text-lg font-medium mb-2">
                 {isDragging
                   ? "Drop your file here"
-                  : "Drag and drop your JSON file"}
+                  : "Drag and drop your Matches.json file"}
               </p>
               <p className="text-sm text-muted-foreground mb-4">
                 or click to browse
