@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  ChevronLeft,
-  ChevronRight,
-  Download,
-  Share2,
-  Instagram,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, Download, Share2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import {
   ActivityHeatmapStory,
@@ -54,7 +48,7 @@ export default function StoryCarousel({ stories }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
-  const [isSharing, setIsSharing] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
   const carouselRef = useRef(null);
 
   const minSwipeDistance = 50;
@@ -101,16 +95,30 @@ export default function StoryCarousel({ stories }) {
 
   const generateStoryImage = async () => {
     const storyElement = carouselRef.current?.querySelector(".story-container");
-    if (!storyElement) return null;
+    if (!storyElement) {
+      console.error("Story container element not found");
+      return null;
+    }
 
     try {
       const html2canvas = (await import("html2canvas")).default;
+
+      // Get the element's actual rendered dimensions
+      const rect = storyElement.getBoundingClientRect();
+
+      // Use offsetWidth/Height which includes padding but not margin
+      const width = storyElement.offsetWidth || rect.width;
+      const height = storyElement.offsetHeight || rect.height;
+
       const canvas = await html2canvas(storyElement, {
-        backgroundColor: null,
-        scale: 2, // Higher quality
-        width: 360, // Instagram story width
-        height: 640, // Instagram story height
+        backgroundColor: null, // Transparent background
+        scale: 2, // 2x for better quality
         useCORS: true,
+        logging: false,
+        // Don't set width/height to let html2canvas detect them automatically
+        scrollY: -window.scrollY,
+        scrollX: -window.scrollX,
+        allowTaint: true,
       });
 
       return canvas;
@@ -139,55 +147,19 @@ export default function StoryCarousel({ stories }) {
     }
   };
 
-  const handleInstagramShare = async () => {
-    if (isSharing || typeof window === "undefined") return;
-    setIsSharing(true);
-
-    try {
-      const canvas = await generateStoryImage();
-      if (!canvas) throw new Error("Failed to generate image");
-
-      canvas.toBlob(async (blob) => {
-        if (!blob) return;
-
-        const file = new File([blob], "hinge-story.png", { type: "image/png" });
-
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          try {
-            await navigator.share({
-              files: [file],
-              // text is often ignored when sharing files to Instagram Stories
-            });
-          } catch (shareError) {
-            if (shareError.name !== "AbortError") {
-              console.error("Share failed:", shareError);
-              alert(
-                "Could not share directly. Image will be downloaded instead."
-              );
-              downloadImage(canvas);
-            }
-          }
-        } else {
-          // Fallback: Download and tell user
-          downloadImage(canvas);
-          alert(
-            "Image downloaded! You can now post it to your Instagram Story."
-          );
-        }
-        setIsSharing(false);
-      }, "image/png");
-    } catch (error) {
-      console.error("Error in Instagram share:", error);
-      setIsSharing(false);
-      alert("Something went wrong. Please try again.");
-    }
-  };
-
   const downloadImage = (canvas) => {
-    const link = document.createElement("a");
-    link.download = `hinge-story-${currentIndex + 1}.png`;
-    link.href = canvas.toDataURL("image/png");
-    link.click();
+    try {
+      const link = document.createElement("a");
+      const timestamp = new Date().toISOString().slice(0, 10);
+      link.download = `hinge-story-${currentIndex + 1}-${timestamp}.png`;
+      link.href = canvas.toDataURL("image/png", 1.0); // Max quality
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Error downloading image:", error);
+      alert("Error downloading image. Please try again.");
+    }
   };
 
   const fallbackShare = () => {
@@ -200,11 +172,22 @@ export default function StoryCarousel({ stories }) {
   };
 
   const downloadStory = async () => {
-    if (typeof window === "undefined") return;
+    if (typeof window === "undefined" || isDownloading) return;
 
-    const canvas = await generateStoryImage();
-    if (canvas) {
+    setIsDownloading(true);
+
+    try {
+      const canvas = await generateStoryImage();
+      if (!canvas) {
+        alert("Failed to generate story image. Please try again.");
+        return;
+      }
       downloadImage(canvas);
+    } catch (error) {
+      console.error("Error in downloadStory:", error);
+      alert("Error downloading story. Please try again.");
+    } finally {
+      setIsDownloading(false);
     }
   };
 
@@ -245,20 +228,13 @@ export default function StoryCarousel({ stories }) {
         <div className="flex items-center space-x-2">
           <button
             onClick={downloadStory}
-            className="p-2 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-colors"
-            title="Download Story"
+            disabled={isDownloading}
+            className={`p-2 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-colors ${
+              isDownloading ? "opacity-50 cursor-wait" : ""
+            }`}
+            title="Download Story Image"
           >
             <Download className="w-5 h-5" />
-          </button>
-          <button
-            onClick={handleInstagramShare}
-            disabled={isSharing}
-            className={`p-2 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-colors ${
-              isSharing ? "opacity-50 cursor-wait" : ""
-            }`}
-            title="Share to Instagram Story"
-          >
-            <Instagram className="w-5 h-5" />
           </button>
           <button
             onClick={handleShare}
