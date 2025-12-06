@@ -62,14 +62,50 @@ npm run dev
 - **No tracking or analytics** - your data stays private
 - **Open source** - you can verify the code yourself
 
+## Deployment 🚀
+
+This app is configured to deploy to Cloudflare Workers using OpenNext.
+
+### Prerequisites
+
+- [Cloudflare account](https://dash.cloudflare.com/sign-up)
+- [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/install-and-update/) authenticated
+
+### Deploy to Cloudflare
+
+1. Login to Cloudflare (first time only):
+
+```bash
+pnpm wrangler login
+```
+
+2. Deploy to production:
+
+```bash
+pnpm run deploy
+```
+
+3. Preview locally:
+
+```bash
+pnpm run preview
+```
+
+The deployment will:
+- Build your Next.js app
+- Transform it for Cloudflare Workers using OpenNext
+- Deploy to Cloudflare's edge network
+
 ## Technology Stack 🛠️
 
-- **Next.js 15** - React framework
+- **Next.js 16** - React framework
 - **Tailwind CSS** - Styling
 - **shadcn/ui** - UI components
 - **Recharts** - Data visualization
 - **Lucide React** - Icons
 - **date-fns** - Date manipulation
+- **OpenNext** - Cloudflare Workers adapter
+- **Cloudflare Workers** - Edge deployment platform
 
 ## Analytics Provided 📈
 

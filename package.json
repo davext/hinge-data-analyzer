@@ -9,11 +9,10 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "start": "next start",
-    "lint": "next lint",
-    "pages:build": "npx opennextjs-cloudflare build",
-    "pages:deploy": "npx opennextjs-cloudflare deploy",
-    "pages:dev": "pnpm run pages:build && wrangler dev"
+    "lint": "next lint"
   },
   "dependencies": {
     "@next/third-parties": "^16.0.7",
