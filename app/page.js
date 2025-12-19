@@ -44,9 +44,36 @@ export default function Home() {
     if (rawData) {
       const processed = processHingeData(rawData);
       setProcessedData(processed);
-      // Store processed data for sharing (client-side only)
+      // Store only the data needed for story generation (client-side only)
+      // This avoids exceeding sessionStorage quota for large datasets
       if (typeof window !== "undefined") {
-        sessionStorage.setItem("hingeProcessedData", JSON.stringify(processed));
+        // Find the longest conversation for the story
+        const longestChat = processed.matches.reduce(
+          (max, match) => (match.messageCount > max.messageCount ? match : max),
+          { messageCount: 0, date: new Date() }
+        );
+        
+        // Create a slim version with only what stories need
+        const storyData = {
+          totalMatches: processed.totalMatches,
+          totalMessages: processed.totalMessages,
+          totalLikes: processed.totalLikes,
+          totalDates: processed.totalDates,
+          totalConversations: processed.totalConversations,
+          totalUnmatches: processed.totalUnmatches,
+          totalPeopleLiked: processed.totalPeopleLiked,
+          analytics: processed.analytics,
+          // Only include essential match data for stories
+          matches: [longestChat],
+          weMet: processed.weMet,
+        };
+        
+        try {
+          sessionStorage.setItem("hingeProcessedData", JSON.stringify(storyData));
+        } catch (e) {
+          console.warn("Could not save to sessionStorage:", e.message);
+          // Stories will still work from memory during this session
+        }
       }
     } else {
       setProcessedData(null);
