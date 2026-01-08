@@ -2,6 +2,8 @@
 
 A beautiful, modern web application to analyze your Hinge dating app data with interactive charts and insights.
 
+🔗 **Live Demo**: [hinge-data-analyzer.slug.workers.dev](https://hinge-data-analyzer.slug.workers.dev/)
+
 ## Features ✨
 
 - **File Upload**: Easy drag-and-drop interface for JSON data
@@ -29,7 +31,7 @@ A beautiful, modern web application to analyze your Hinge dating app data with i
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/hinge-data-analyzer.git
+git clone https://github.com/davext/hinge-data-analyzer.git
 cd hinge-data-analyzer
 ```
 
